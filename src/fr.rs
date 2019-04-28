@@ -333,100 +333,113 @@ impl Fr {
                 *n = n.square();
             }
         }
+        let r_minus_2 = [
+            0x26a9d3de35b7a1e5,
+            0xf49b2bf0e49f58d7,
+            0xffffffffffffffff,
+            0x01ffffffffffffff,
+        ];
+
+        let mut t0 = *self;
+        t0 = t0.pow(&r_minus_2);
         // found using https://github.com/kwantam/addchain
-        let t10 = *self;
-        let t1 = t10.square();
-        let t0 = t1.square();
-        let t3 = t0 * &t1;
-        let t6 = t3 * &t10;
-        let t7 = t6 * &t1;
-        let t12 = t7 * &t3;
-        let t13 = t12 * &t0;
-        let t16 = t12 * &t3;
-        let t2 = t13 * &t3;
-        let t15 = t16 * &t3;
-        let t19 = t2 * &t0;
-        let t9 = t15 * &t3;
-        let t18 = t9 * &t3;
-        let t14 = t18 * &t1;
-        let t4 = t18 * &t0;
-        let t8 = t18 * &t3;
-        let t17 = t14 * &t3;
-        let t11 = t8 * &t3;
-        let t1 = t17 * &t3;
-        let t5 = t11 * &t3;
-        let t3 = t5 * &t0;
-        let mut t0 = t5.square();
-        square_assign_multi(&mut t0, 5);
-        t0.mul_assign(&t3);
-        square_assign_multi(&mut t0, 6);
-        t0.mul_assign(&t8);
-        square_assign_multi(&mut t0, 7);
-        t0.mul_assign(&t19);
-        square_assign_multi(&mut t0, 6);
-        t0.mul_assign(&t13);
-        square_assign_multi(&mut t0, 8);
-        t0.mul_assign(&t14);
-        square_assign_multi(&mut t0, 6);
-        t0.mul_assign(&t18);
-        square_assign_multi(&mut t0, 7);
-        t0.mul_assign(&t17);
-        square_assign_multi(&mut t0, 5);
-        t0.mul_assign(&t16);
-        square_assign_multi(&mut t0, 3);
-        t0.mul_assign(&t10);
-        square_assign_multi(&mut t0, 11);
-        t0.mul_assign(&t11);
-        square_assign_multi(&mut t0, 8);
-        t0.mul_assign(&t5);
-        square_assign_multi(&mut t0, 5);
-        t0.mul_assign(&t15);
-        square_assign_multi(&mut t0, 8);
-        t0.mul_assign(&t10);
-        square_assign_multi(&mut t0, 12);
-        t0.mul_assign(&t13);
-        square_assign_multi(&mut t0, 7);
-        t0.mul_assign(&t9);
-        square_assign_multi(&mut t0, 5);
-        t0.mul_assign(&t15);
-        square_assign_multi(&mut t0, 14);
-        t0.mul_assign(&t14);
-        square_assign_multi(&mut t0, 5);
-        t0.mul_assign(&t13);
-        square_assign_multi(&mut t0, 2);
-        t0.mul_assign(&t10);
-        square_assign_multi(&mut t0, 6);
-        t0.mul_assign(&t10);
-        square_assign_multi(&mut t0, 9);
-        t0.mul_assign(&t7);
-        square_assign_multi(&mut t0, 6);
-        t0.mul_assign(&t12);
-        square_assign_multi(&mut t0, 8);
-        t0.mul_assign(&t11);
-        square_assign_multi(&mut t0, 3);
-        t0.mul_assign(&t10);
-        square_assign_multi(&mut t0, 12);
-        t0.mul_assign(&t9);
-        square_assign_multi(&mut t0, 11);
-        t0.mul_assign(&t8);
-        square_assign_multi(&mut t0, 8);
-        t0.mul_assign(&t7);
-        square_assign_multi(&mut t0, 4);
-        t0.mul_assign(&t6);
-        square_assign_multi(&mut t0, 10);
-        t0.mul_assign(&t5);
-        square_assign_multi(&mut t0, 7);
-        t0.mul_assign(&t3);
-        square_assign_multi(&mut t0, 6);
-        t0.mul_assign(&t4);
-        square_assign_multi(&mut t0, 7);
-        t0.mul_assign(&t3);
-        square_assign_multi(&mut t0, 5);
-        t0.mul_assign(&t2);
-        square_assign_multi(&mut t0, 6);
-        t0.mul_assign(&t2);
-        square_assign_multi(&mut t0, 7);
-        t0.mul_assign(&t1);
+        // let t5 = *self;
+        // let mut t8 = t5;
+        // t8 = t8.square();
+        // let mut t2 = t8;
+        // t2.mul_assign(&t5);
+        // let mut t1 = t2;
+        // t1.mul_assign(&t8);
+        // let mut t0 = t1;
+        // t0.mul_assign(&t8);
+        // let mut t3 = t1;
+        // t3.mul_assign(&t2);
+        // let mut t11 = t1;
+        // t11 = t11.square();
+        // let mut t1 = t11;
+        // t1.mul_assign(&t0);
+        // let mut t0 = t11;
+        // t0 = t0.square();
+        // let mut t6 = t1;
+        // t6.mul_assign(&t3);
+        // let mut t1 = t0;
+        // t1.mul_assign(&t11);
+        // let mut t4 = t1;
+        // t4.mul_assign(&t3);
+        // let mut t3 = t1;
+        // t3.mul_assign(&t6);
+        // let mut t7 = t4;
+        // t7.mul_assign(&t0);
+        // t2.mul_assign(&t7);
+        // let mut t10 = t4;
+        // t10.mul_assign(&t6);
+        // let mut t9 = t3;
+        // t9.mul_assign(&t4);
+        // let mut t6 = t9;
+        // t6.mul_assign(&t5);
+        // let mut t12 = t6;
+        // t12.mul_assign(&t4);
+        // let mut t5 = t6;
+        // t5.mul_assign(&t10);
+        // t7.mul_assign(&t5);
+        // t6.mul_assign(&t7);
+        // t3.mul_assign(&t6);
+        // t9.mul_assign(&t3);
+        // t1.mul_assign(&t9);
+        // t4.mul_assign(&t9);
+        // t3.mul_assign(&t4);
+        // t11.mul_assign(&t3);
+        // t12.mul_assign(&t11);
+        // t8.mul_assign(&t12);
+        // let mut t13 = t8;
+        // t13.mul_assign(&t0);
+        // let mut t0 = t13;
+        // square_assign_multi(&mut t0, 10);
+        // t0.mul_assign(&t13);
+        // square_assign_multi(&mut t0, 10);
+        // t0.mul_assign(&t13);
+        // square_assign_multi(&mut t0, 10);
+        // t0.mul_assign(&t13);
+        // square_assign_multi(&mut t0, 10);
+        // t0.mul_assign(&t13);
+        // square_assign_multi(&mut t0, 10);
+        // t0.mul_assign(&t13);
+        // square_assign_multi(&mut t0, 10);
+        // t0.mul_assign(&t13);
+        // square_assign_multi(&mut t0, 10);
+        // t0.mul_assign(&t13);
+        // square_assign_multi(&mut t0, 10);
+        // t0.mul_assign(&t13);
+        // square_assign_multi(&mut t0, 10);
+        // t0.mul_assign(&t13);
+        // square_assign_multi(&mut t0, 10);
+        // t0.mul_assign(&t13);
+        // square_assign_multi(&mut t0, 10);
+        // t0.mul_assign(&t13);
+        // square_assign_multi(&mut t0, 10);
+        // t0.mul_assign(&t12);
+        // square_assign_multi(&mut t0, 12);
+        // t0.mul_assign(&t11);
+        // square_assign_multi(&mut t0, 7);
+        // t0.mul_assign(&t10);
+        // square_assign_multi(&mut t0, 13);
+        // t0.mul_assign(&t9);
+        // square_assign_multi(&mut t0, 12);
+        // t0.mul_assign(&t8);
+        // square_assign_multi(&mut t0, 11);
+        // t0.mul_assign(&t7);
+        // square_assign_multi(&mut t0, 11);
+        // t0.mul_assign(&t6);
+        // square_assign_multi(&mut t0, 9);
+        // t0.mul_assign(&t5);
+        // square_assign_multi(&mut t0, 11);
+        // t0.mul_assign(&t4);
+        // square_assign_multi(&mut t0, 13);
+        // t0.mul_assign(&t3);
+        // square_assign_multi(&mut t0, 7);
+        // t0.mul_assign(&t2);
+        // square_assign_multi(&mut t0, 13);
+        // t0.mul_assign(&t1);
 
         CtOption::new(t0, !self.ct_eq(&Self::zero()))
     }
@@ -557,7 +570,7 @@ fn test_debug() {
     );
     assert_eq!(
         format!("{:?}", R2),
-        "0x09a6fc6f479155c6932514eeeb8814f4f315d62f66b6e75025f80bb3b99607d9"
+        "0x00000000000000000000000000000005b26a078db053946cab1610e5242f0c80"
     );
 }
 
@@ -592,16 +605,16 @@ fn test_into_bytes() {
     assert_eq!(
         R2.into_bytes(),
         [
-            217, 7, 150, 185, 179, 11, 248, 37, 80, 231, 182, 102, 47, 214, 21, 243, 244, 20, 136,
-            235, 238, 20, 37, 147, 198, 85, 145, 71, 111, 252, 166, 9
+            128, 12, 47, 36, 229, 16, 22, 171, 108, 148, 83, 176, 141, 7, 106, 178, 5, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         ]
     );
 
     assert_eq!(
         (-&Fr::one()).into_bytes(),
         [
-            182, 44, 247, 214, 94, 14, 151, 208, 130, 16, 200, 204, 147, 32, 104, 166, 0, 59, 52,
-            1, 1, 59, 103, 6, 169, 175, 51, 101, 234, 180, 125, 14
+            230, 161, 183, 53, 222, 211, 169, 38, 215, 88, 159, 228, 240, 43, 155, 244, 255, 255,
+            255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 1
         ]
     );
 }
@@ -628,8 +641,8 @@ fn test_from_bytes() {
 
     assert_eq!(
         Fr::from_bytes([
-            217, 7, 150, 185, 179, 11, 248, 37, 80, 231, 182, 102, 47, 214, 21, 243, 244, 20, 136,
-            235, 238, 20, 37, 147, 198, 85, 145, 71, 111, 252, 166, 9
+            128, 12, 47, 36, 229, 16, 22, 171, 108, 148, 83, 176, 141, 7, 106, 178, 5, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         ])
         .unwrap(),
         R2
@@ -638,8 +651,8 @@ fn test_from_bytes() {
     // -1 should work
     assert!(
         Fr::from_bytes([
-            182, 44, 247, 214, 94, 14, 151, 208, 130, 16, 200, 204, 147, 32, 104, 166, 0, 59, 52,
-            1, 1, 59, 103, 6, 169, 175, 51, 101, 234, 180, 125, 14
+            230, 161, 183, 53, 222, 211, 169, 38, 215, 88, 159, 228, 240, 43, 155, 244, 255, 255,
+            255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 1
         ])
         .is_some()
         .unwrap_u8()
@@ -730,9 +743,9 @@ fn test_from_bytes_wide_r2() {
     assert_eq!(
         R2,
         Fr::from_bytes_wide([
-            217, 7, 150, 185, 179, 11, 248, 37, 80, 231, 182, 102, 47, 214, 21, 243, 244, 20, 136,
-            235, 238, 20, 37, 147, 198, 85, 145, 71, 111, 252, 166, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            128, 12, 47, 36, 229, 16, 22, 171, 108, 148, 83, 176, 141, 7, 106, 178, 5, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         ])
     );
 }
@@ -742,9 +755,9 @@ fn test_from_bytes_wide_negative_one() {
     assert_eq!(
         -&Fr::one(),
         Fr::from_bytes_wide([
-            182, 44, 247, 214, 94, 14, 151, 208, 130, 16, 200, 204, 147, 32, 104, 166, 0, 59, 52,
-            1, 1, 59, 103, 6, 169, 175, 51, 101, 234, 180, 125, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            230, 161, 183, 53, 222, 211, 169, 38, 215, 88, 159, 228, 240, 43, 155, 244, 255, 255,
+            255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 1, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         ])
     );
 }
@@ -753,10 +766,10 @@ fn test_from_bytes_wide_negative_one() {
 fn test_from_bytes_wide_maximum() {
     assert_eq!(
         Fr([
-            0x8b75c9015ae42a22,
-            0xe59082e7bf9e38b8,
-            0x6440c91261da51b3,
-            0xa5e07ffb20991cf
+            2834717408665115077,
+            13471421789216862413,
+            10747224682082754571,
+            16204507328226524
         ]),
         Fr::from_bytes_wide([0xff; 64])
     );
@@ -772,10 +785,10 @@ fn test_zero() {
 
 #[cfg(test)]
 const LARGEST: Fr = Fr([
-    0xd0970e5ed6f72cb6,
-    0xa6682093ccc81082,
-    0x06673b0101343b00,
-    0x0e7db4ea6533afa9,
+    0x26a9d3de35b7a1e6,
+    0xf49b2bf0e49f58d7,
+    0xffffffffffffffff,
+    0x01ffffffffffffff,
 ]);
 
 #[test]
@@ -786,10 +799,10 @@ fn test_addition() {
     assert_eq!(
         tmp,
         Fr([
-            0xd0970e5ed6f72cb5,
-            0xa6682093ccc81082,
-            0x06673b0101343b00,
-            0x0e7db4ea6533afa9
+            0x26a9d3de35b7a1e5,
+            0xf49b2bf0e49f58d7,
+            0xffffffffffffffff,
+            0x01ffffffffffffff,
         ])
     );
 
@@ -896,9 +909,7 @@ fn test_inversion() {
     for _ in 0..100 {
         let mut tmp2 = tmp.invert().unwrap();
         tmp2.mul_assign(&tmp);
-
         assert_eq!(tmp2, Fr::one());
-
         tmp.add_assign(&R2);
     }
 }
@@ -906,10 +917,10 @@ fn test_inversion() {
 #[test]
 fn test_invert_is_pow() {
     let r_minus_2 = [
-        0xd0970e5ed6f72cb5,
-        0xa6682093ccc81082,
-        0x06673b0101343b00,
-        0x0e7db4ea6533afa9,
+        0x26a9d3de35b7a1e5,
+        0xf49b2bf0e49f58d7,
+        0xffffffffffffffff,
+        0x01ffffffffffffff,
     ];
 
     let mut r1 = R;
@@ -933,11 +944,10 @@ fn test_invert_is_pow() {
 #[test]
 fn test_sqrt() {
     let mut square = Fr([
-        // r - 2
-        0xd0970e5ed6f72cb5,
-        0xa6682093ccc81082,
-        0x06673b0101343b00,
-        0x0e7db4ea6533afa9,
+        0x26a9d3de35b7a1e5,
+        0xf49b2bf0e49f58d7,
+        0xffffffffffffffff,
+        0x01ffffffffffffff,
     ]);
 
     let mut none_count = 0;
@@ -952,17 +962,17 @@ fn test_sqrt() {
         square -= Fr::one();
     }
 
-    assert_eq!(47, none_count);
+    assert_eq!(44, none_count);
 }
 
 #[test]
 fn test_from_raw() {
     assert_eq!(
         Fr::from_raw([
-            0x25f80bb3b99607d8,
-            0xf315d62f66b6e750,
-            0x932514eeeb8814f4,
-            0x9a6fc6f479155c6
+            0xab1610e5242f0c7f,
+            0xb26a078db053946c,
+            0x0000000000000005,
+            0x0000000000000000,
         ]),
         Fr::from_raw([0xffffffffffffffff; 4])
     );

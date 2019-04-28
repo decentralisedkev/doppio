@@ -275,12 +275,12 @@ impl Fq {
         // https://eprint.iacr.org/2012/685.pdf (page 12, algorithm 5)
 
         // w = self^((t - 1) // 2)
-        //   = self^6104339283789297388802252303364915521546564123189034618274734669823
+        //   = self^29852648006495581632639394572552351243535604982442118874758047620427498785325
         let w = self.pow_vartime(&[
-            0x7fff2dff7fffffff,
-            0x04d0ec02a9ded201,
-            0x94cebea4199cec04,
-            0x0000000039f6d3a9,
+            0x2b4bd8ccbf760a2d,
+            0x5617c6b6603d66f4,
+            0x0000000000000000,
+            0x4200000000000000,
         ]);
 
         let mut v = S;
@@ -362,93 +362,92 @@ impl Fq {
                 *n = n.square();
             }
         }
+
+        let q_minus_2 = [
+            0x5812631a5cf5d3eb,
+            0x14def9dea2f79cd6,
+            0x0000000000000000,
+            0x1000000000000000,
+        ];
+
+        let mut t0 = *self;
+        t0 = t0.pow(&q_minus_2);
+
         // found using https://github.com/kwantam/addchain
-        let t10 = *self;
-        let t0 = t10.square();
-        let mut t1 = t0 * &t10;
-        let mut t16 = t0.square();
-        let mut t6 = t16.square();
-        let t5 = t6 * &t0;
-        let mut t0 = t6 * &t16;
-        let t12 = t5 * &t16;
-        let mut t2 = t6.square();
-        let t7 = t5 * &t6;
-        let mut t15 = t0 * &t5;
-        let mut t17 = t12.square();
-        t1.mul_assign(&t17);
-        let mut t3 = t7 * &t2;
-        let t8 = t1 * &t17;
-        let t4 = t8 * &t2;
-        let t9 = t8 * &t7;
-        let t7 = t4 * &t5;
-        let t11 = t4 * &t17;
-        let t5 = t9 * &t17;
-        let t14 = t7 * &t15;
-        let t13 = t11 * &t12;
-        let t12 = t11 * &t17;
-        t15.mul_assign(&t12);
-        t16.mul_assign(&t15);
-        t3.mul_assign(&t16);
-        t17.mul_assign(&t3);
-        t0.mul_assign(&t17);
-        t6.mul_assign(&t0);
-        t2.mul_assign(&t6);
-        square_assign_multi(&mut t0, 8);
-        t0.mul_assign(&t17);
-        square_assign_multi(&mut t0, 9);
-        t0.mul_assign(&t16);
-        square_assign_multi(&mut t0, 9);
-        t0.mul_assign(&t15);
-        square_assign_multi(&mut t0, 9);
-        t0.mul_assign(&t15);
-        square_assign_multi(&mut t0, 7);
-        t0.mul_assign(&t14);
-        square_assign_multi(&mut t0, 7);
-        t0.mul_assign(&t13);
-        square_assign_multi(&mut t0, 10);
-        t0.mul_assign(&t12);
-        square_assign_multi(&mut t0, 9);
-        t0.mul_assign(&t11);
-        square_assign_multi(&mut t0, 8);
-        t0.mul_assign(&t8);
-        square_assign_multi(&mut t0, 8);
-        t0.mul_assign(&t10);
-        square_assign_multi(&mut t0, 14);
-        t0.mul_assign(&t9);
-        square_assign_multi(&mut t0, 10);
-        t0.mul_assign(&t8);
-        square_assign_multi(&mut t0, 15);
-        t0.mul_assign(&t7);
-        square_assign_multi(&mut t0, 10);
-        t0.mul_assign(&t6);
-        square_assign_multi(&mut t0, 8);
-        t0.mul_assign(&t5);
-        square_assign_multi(&mut t0, 16);
-        t0.mul_assign(&t3);
-        square_assign_multi(&mut t0, 8);
-        t0.mul_assign(&t2);
-        square_assign_multi(&mut t0, 7);
-        t0.mul_assign(&t4);
-        square_assign_multi(&mut t0, 9);
-        t0.mul_assign(&t2);
-        square_assign_multi(&mut t0, 8);
-        t0.mul_assign(&t3);
-        square_assign_multi(&mut t0, 8);
-        t0.mul_assign(&t2);
-        square_assign_multi(&mut t0, 8);
-        t0.mul_assign(&t2);
-        square_assign_multi(&mut t0, 8);
-        t0.mul_assign(&t2);
-        square_assign_multi(&mut t0, 8);
-        t0.mul_assign(&t3);
-        square_assign_multi(&mut t0, 8);
-        t0.mul_assign(&t2);
-        square_assign_multi(&mut t0, 8);
-        t0.mul_assign(&t2);
-        square_assign_multi(&mut t0, 5);
-        t0.mul_assign(&t1);
-        square_assign_multi(&mut t0, 5);
-        t0.mul_assign(&t1);
+        // let t1 = *self;
+        // let mut t0 = t1;
+        // t0 = t0.square();
+        // let mut t8 = t0;
+        // t8.mul_assign(&t1);
+        // let mut t2 = t0;
+        // t2 = t2.square();
+        // let mut t4 = t8;
+        // t4.mul_assign(&t0);
+        // let mut t5 = t2;
+        // t5.mul_assign(&t8);
+        // let mut t0 = t2;
+        // t0 = t0.square();
+        // let mut t6 = t4;
+        // t6.mul_assign(&t2);
+        // t2.mul_assign(&t5);
+        // let mut t7 = t0;
+        // t7.mul_assign(&t4);
+        // let mut t3 = t0;
+        // t3.mul_assign(&t5);
+        // square_assign_multi(&mut t0, 127);
+        // t0.mul_assign(&t4);
+        // square_assign_multi(&mut t0, 6);
+        // t0.mul_assign(&t7);
+        // square_assign_multi(&mut t0, 3);
+        // t0.mul_assign(&t5);
+        // square_assign_multi(&mut t0, 5);
+        // t0.mul_assign(&t3);
+        // square_assign_multi(&mut t0, 4);
+        // t0.mul_assign(&t6);
+        // square_assign_multi(&mut t0, 4);
+        // t0.mul_assign(&t7);
+        // square_assign_multi(&mut t0, 3);
+        // t0.mul_assign(&t5);
+        // square_assign_multi(&mut t0, 4);
+        // t0.mul_assign(&t4);
+        // square_assign_multi(&mut t0, 7);
+        // t0.mul_assign(&t2);
+        // square_assign_multi(&mut t0, 4);
+        // t0.mul_assign(&t7);
+        // square_assign_multi(&mut t0, 3);
+        // t0.mul_assign(&t5);
+        // square_assign_multi(&mut t0, 5);
+        // t0.mul_assign(&t5);
+        // square_assign_multi(&mut t0, 6);
+        // t0.mul_assign(&t7);
+        // square_assign_multi(&mut t0, 3);
+        // t0.mul_assign(&t8);
+        // square_assign_multi(&mut t0, 6);
+        // t0.mul_assign(&t2);
+        // square_assign_multi(&mut t0, 10);
+        // t0.mul_assign(&t6);
+        // square_assign_multi(&mut t0, 4);
+        // t0.mul_assign(&t8);
+        // square_assign_multi(&mut t0, 5);
+        // t0.mul_assign(&t8);
+        // square_assign_multi(&mut t0, 7);
+        // t0.mul_assign(&t7);
+        // square_assign_multi(&mut t0, 6);
+        // t0.mul_assign(&t2);
+        // square_assign_multi(&mut t0, 4);
+        // t0.mul_assign(&t6);
+        // square_assign_multi(&mut t0, 3);
+        // t0.mul_assign(&t5);
+        // square_assign_multi(&mut t0, 5);
+        // t0.mul_assign(&t2);
+        // square_assign_multi(&mut t0, 3);
+        // t0.mul_assign(&t4);
+        // square_assign_multi(&mut t0, 6);
+        // t0.mul_assign(&t3);
+        // square_assign_multi(&mut t0, 4);
+        // t0.mul_assign(&t2);
+        // square_assign_multi(&mut t0, 2);
+        // t0.mul_assign(&t1);
 
         CtOption::new(t0, !self.ct_eq(&Self::zero()))
     }
@@ -579,7 +578,7 @@ fn test_debug() {
     );
     assert_eq!(
         format!("{:?}", R2),
-        "0x1824b159acc5056f998c4fefecbc4ff55884b7fa0003480200000001fffffffe"
+        "0x0ffffffffffffffffffffffffffffffec6ef5bf4737dcf70d6ec31748d98951d"
     );
 }
 
@@ -614,16 +613,16 @@ fn test_into_bytes() {
     assert_eq!(
         R2.into_bytes(),
         [
-            254, 255, 255, 255, 1, 0, 0, 0, 2, 72, 3, 0, 250, 183, 132, 88, 245, 79, 188, 236, 239,
-            79, 140, 153, 111, 5, 197, 172, 89, 177, 36, 24
+            29, 149, 152, 141, 116, 49, 236, 214, 112, 207, 125, 115, 244, 91, 239, 198, 254, 255,
+            255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 15,
         ]
     );
 
     assert_eq!(
         (-&Fq::one()).into_bytes(),
         [
-            0, 0, 0, 0, 255, 255, 255, 255, 254, 91, 254, 255, 2, 164, 189, 83, 5, 216, 161, 9, 8,
-            216, 57, 51, 72, 125, 157, 41, 83, 167, 237, 115
+            236, 211, 245, 92, 26, 99, 18, 88, 214, 156, 247, 162, 222, 249, 222, 20, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16,
         ]
     );
 }
@@ -650,8 +649,8 @@ fn test_from_bytes() {
 
     assert_eq!(
         Fq::from_bytes([
-            254, 255, 255, 255, 1, 0, 0, 0, 2, 72, 3, 0, 250, 183, 132, 88, 245, 79, 188, 236, 239,
-            79, 140, 153, 111, 5, 197, 172, 89, 177, 36, 24
+            29, 149, 152, 141, 116, 49, 236, 214, 112, 207, 125, 115, 244, 91, 239, 198, 254, 255,
+            255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 15,
         ])
         .unwrap(),
         R2
@@ -660,8 +659,8 @@ fn test_from_bytes() {
     // -1 should work
     assert!(
         Fq::from_bytes([
-            0, 0, 0, 0, 255, 255, 255, 255, 254, 91, 254, 255, 2, 164, 189, 83, 5, 216, 161, 9, 8,
-            216, 57, 51, 72, 125, 157, 41, 83, 167, 237, 115
+            236, 211, 245, 92, 26, 99, 18, 88, 214, 156, 247, 162, 222, 249, 222, 20, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16,
         ])
         .is_some()
         .unwrap_u8()
@@ -750,9 +749,9 @@ fn test_from_bytes_wide_r2() {
     assert_eq!(
         R2,
         Fq::from_bytes_wide([
-            254, 255, 255, 255, 1, 0, 0, 0, 2, 72, 3, 0, 250, 183, 132, 88, 245, 79, 188, 236, 239,
-            79, 140, 153, 111, 5, 197, 172, 89, 177, 36, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            29, 149, 152, 141, 116, 49, 236, 214, 112, 207, 125, 115, 244, 91, 239, 198, 254, 255,
+            255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 15, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         ])
     );
 }
@@ -762,9 +761,9 @@ fn test_from_bytes_wide_negative_one() {
     assert_eq!(
         -&Fq::one(),
         Fq::from_bytes_wide([
-            0, 0, 0, 0, 255, 255, 255, 255, 254, 91, 254, 255, 2, 164, 189, 83, 5, 216, 161, 9, 8,
-            216, 57, 51, 72, 125, 157, 41, 83, 167, 237, 115, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            236, 211, 245, 92, 26, 99, 18, 88, 214, 156, 247, 162, 222, 249, 222, 20, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         ])
     );
 }
@@ -773,10 +772,10 @@ fn test_from_bytes_wide_negative_one() {
 fn test_from_bytes_wide_maximum() {
     assert_eq!(
         Fq([
-            0xc62c1805439b73b1,
-            0xc2b9551e8ced218e,
-            0xda44ec81daf9a422,
-            0x5605aa601c162e79
+            12377152977236976043,
+            8463040852123566417,
+            9252043365999729510,
+            1032181346226261703,
         ]),
         Fq::from_bytes_wide([0xff; 64])
     );
@@ -792,10 +791,10 @@ fn test_zero() {
 
 #[cfg(test)]
 const LARGEST: Fq = Fq([
-    0xffffffff00000000,
-    0x53bda402fffe5bfe,
-    0x3339d80809a1d805,
-    0x73eda753299d7d48,
+    0x5812631a5cf5d3ec,
+    0x14def9dea2f79cd6,
+    0x0000000000000000,
+    0x1000000000000000,
 ]);
 
 #[test]
@@ -806,10 +805,10 @@ fn test_addition() {
     assert_eq!(
         tmp,
         Fq([
-            0xfffffffeffffffff,
-            0x53bda402fffe5bfe,
-            0x3339d80809a1d805,
-            0x73eda753299d7d48
+            0x5812631a5cf5d3eb,
+            0x14def9dea2f79cd6,
+            0x0000000000000000,
+            0x1000000000000000,
         ])
     );
 
@@ -926,10 +925,10 @@ fn test_inversion() {
 #[test]
 fn test_invert_is_pow() {
     let q_minus_2 = [
-        0xfffffffeffffffff,
-        0x53bda402fffe5bfe,
-        0x3339d80809a1d805,
-        0x73eda753299d7d48,
+        0x5812631a5cf5d3eb,
+        0x14def9dea2f79cd6,
+        0x0000000000000000,
+        0x1000000000000000,
     ];
 
     let mut r1 = R;
@@ -957,10 +956,10 @@ fn test_sqrt() {
     }
 
     let mut square = Fq([
-        0x46cd85a5f273077e,
-        0x1d30c47dd68fc735,
-        0x77f656f60beca0eb,
-        0x494aa01bdf32468d,
+        0x5812631a5cf5d3eb,
+        0x14def9dea2f79cd6,
+        0x0000000000000000,
+        0x1000000000000000,
     ]);
 
     let mut none_count = 0;
@@ -975,17 +974,17 @@ fn test_sqrt() {
         square -= Fq::one();
     }
 
-    assert_eq!(49, none_count);
+    assert_eq!(100, none_count);
 }
 
 #[test]
 fn test_from_raw() {
     assert_eq!(
         Fq::from_raw([
-            0x1fffffffd,
-            0x5884b7fa00034802,
-            0x998c4fefecbc4ff5,
-            0x1824b159acc5056f
+            0xd6ec31748d98951c,
+            0xc6ef5bf4737dcf70,
+            0xfffffffffffffffe,
+            0x0fffffffffffffff,
         ]),
         Fq::from_raw([0xffffffffffffffff; 4])
     );
