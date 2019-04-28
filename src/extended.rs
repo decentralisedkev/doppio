@@ -1,11 +1,11 @@
 use core::ops::{Add, AddAssign, Mul, MulAssign, Neg, Sub, SubAssign};
 use subtle::{Choice, ConditionallySelectable, ConstantTimeEq};
 
+use crate::affine::{AffineNielsPoint, AffinePoint};
+use crate::completed::CompletedPoint;
+use crate::curveconstants::{EDWARDS_D2, FR_MODULUS_BYTES};
 use crate::fq::Fq;
 use crate::fr::Fr;
-use crate::affine::{AffinePoint, AffineNielsPoint};
-use crate::completed::{CompletedPoint};
-use crate::curveconstants::{FR_MODULUS_BYTES, EDWARDS_D2};
 
 /// This represents an extended point `(U, V, Z, T1, T2)`
 /// with `Z` nonzero, corresponding to the affine point
@@ -20,21 +20,21 @@ use crate::curveconstants::{FR_MODULUS_BYTES, EDWARDS_D2};
 /// * Compare it with another extended point using `PartialEq` or `ct_eq()`.
 #[derive(Clone, Copy, Debug)]
 pub struct ExtendedPoint {
-    pub(crate)u: Fq,
-    pub(crate)v: Fq,
-    pub(crate)z: Fq,
-    pub(crate)t1: Fq,
-    pub(crate)t2: Fq,
+    pub(crate) u: Fq,
+    pub(crate) v: Fq,
+    pub(crate) z: Fq,
+    pub(crate) t1: Fq,
+    pub(crate) t2: Fq,
 }
 
 /// This is a pre-processed version of an extended point `(U, V, Z, T1, T2)`
 /// in the form `(V + U, V - U, Z, T1 * T2 * 2d)`.
 #[derive(Clone, Copy, Debug)]
 pub struct ExtendedNielsPoint {
-    pub(crate)v_plus_u: Fq,
-    pub(crate)v_minus_u: Fq,
-    pub(crate)z: Fq,
-    pub(crate)t2d: Fq,
+    pub(crate) v_plus_u: Fq,
+    pub(crate) v_minus_u: Fq,
+    pub(crate) z: Fq,
+    pub(crate) t2d: Fq,
 }
 
 impl ConstantTimeEq for ExtendedPoint {
@@ -254,7 +254,8 @@ impl ExtendedPoint {
             v: vv_plus_uu,
             z: vv_minus_uu,
             t: &zz2 - &vv_minus_uu,
-        }.into_extended()
+        }
+        .into_extended()
     }
 
     #[inline]
@@ -339,7 +340,8 @@ impl<'a, 'b> Add<&'b ExtendedNielsPoint> for &'a ExtendedPoint {
             v: &b + &a,
             z: &d + &c,
             t: &d - &c,
-        }.into_extended()
+        }
+        .into_extended()
     }
 }
 
@@ -357,12 +359,12 @@ impl<'a, 'b> Sub<&'b ExtendedNielsPoint> for &'a ExtendedPoint {
             v: &b + &a,
             z: &d - &c,
             t: &d + &c,
-        }.into_extended()
+        }
+        .into_extended()
     }
 }
 
 impl_binops_additive!(ExtendedPoint, ExtendedNielsPoint);
-
 
 impl<'a, 'b> Add<&'b AffineNielsPoint> for &'a ExtendedPoint {
     type Output = ExtendedPoint;
@@ -384,7 +386,8 @@ impl<'a, 'b> Add<&'b AffineNielsPoint> for &'a ExtendedPoint {
             v: &b + &a,
             z: &d + &c,
             t: &d - &c,
-        }.into_extended()
+        }
+        .into_extended()
     }
 }
 
@@ -402,10 +405,10 @@ impl<'a, 'b> Sub<&'b AffineNielsPoint> for &'a ExtendedPoint {
             v: &b + &a,
             z: &d - &c,
             t: &d + &c,
-        }.into_extended()
+        }
+        .into_extended()
     }
 }
-
 
 impl<'a, 'b> Add<&'b ExtendedPoint> for &'a ExtendedPoint {
     type Output = ExtendedPoint;

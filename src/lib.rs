@@ -43,9 +43,9 @@ mod util;
 mod ctoption;
 pub use ctoption::CtOption;
 
+mod curveconstants;
 mod fqconstants;
 mod frconstants;
-mod curveconstants;
 pub use curveconstants::*;
 
 mod fq;
@@ -54,11 +54,10 @@ pub use fq::Fq;
 pub use fr::Fr;
 
 mod affine;
-pub use affine::{AffinePoint, AffineNielsPoint};
+pub use affine::{AffineNielsPoint, AffinePoint};
 mod extended;
-pub use extended::{ExtendedPoint, ExtendedNielsPoint};
+pub use extended::{ExtendedNielsPoint, ExtendedPoint};
 mod completed;
-
 
 impl_binops_additive!(ExtendedPoint, AffineNielsPoint);
 
@@ -172,7 +171,8 @@ fn test_assoc() {
             0x46462e26d4edb8c7,
             0x10b4c1517ca82e9b,
         ]),
-    }).mul_by_cofactor();
+    })
+    .mul_by_cofactor();
     assert!(p.is_on_curve_vartime());
 
     assert_eq!(
@@ -197,7 +197,8 @@ fn test_batch_normalize() {
             0x46462e26d4edb8c7,
             0x10b4c1517ca82e9b,
         ]),
-    }).mul_by_cofactor();
+    })
+    .mul_by_cofactor();
 
     let mut v = vec![];
     for _ in 0..10 {
@@ -431,7 +432,8 @@ fn test_mul_consistency() {
             0x46462e26d4edb8c7,
             0x10b4c1517ca82e9b,
         ]),
-    }).mul_by_cofactor();
+    })
+    .mul_by_cofactor();
     assert_eq!(p * c, (p * a) * b);
 }
 

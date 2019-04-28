@@ -1,17 +1,17 @@
 use core::ops::Neg;
 use subtle::{Choice, ConditionallySelectable, ConstantTimeEq};
 
-use crate::fq::Fq;
-use crate::extended::ExtendedPoint;
 use crate::ctoption::CtOption;
 use crate::curveconstants::{EDWARDS_D, EDWARDS_D2};
+use crate::extended::ExtendedPoint;
+use crate::fq::Fq;
 
 /// This represents a Jubjub point in the affine `(u, v)`
 /// coordinates.
 #[derive(Clone, Copy, Debug)]
 pub struct AffinePoint {
-    pub(crate)u: Fq,
-    pub(crate)v: Fq,
+    pub(crate) u: Fq,
+    pub(crate) v: Fq,
 }
 
 /// This is a pre-processed version of an affine point `(u, v)`
@@ -19,9 +19,9 @@ pub struct AffinePoint {
 /// [`ExtendedPoint`](crate::ExtendedPoint).
 #[derive(Clone, Copy, Debug)]
 pub struct AffineNielsPoint {
-    pub(crate)v_plus_u: Fq,
-    pub(crate)v_minus_u: Fq,
-    pub(crate)t2d: Fq,
+    pub(crate) v_plus_u: Fq,
+    pub(crate) v_minus_u: Fq,
+    pub(crate) t2d: Fq,
 }
 
 impl AffinePoint {
@@ -227,4 +227,3 @@ impl ConditionallySelectable for AffineNielsPoint {
         }
     }
 }
-
