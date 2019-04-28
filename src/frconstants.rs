@@ -1,38 +1,37 @@
-
 pub use crate::fr::Fr;
 
 /// Constant representing the modulus
-/// r = 0x0e7db4ea6533afa906673b0101343b00a6682093ccc81082d0970e5ed6f72cb7
+/// r = 0x1fffffffffffffffffffffffffffffff49b2bf0e49f58d726a9d3de35b7a1e7
 pub const MODULUS: Fr = Fr([
-    0xd0970e5ed6f72cb7,
-    0xa6682093ccc81082,
-    0x06673b0101343b00,
-    0x0e7db4ea6533afa9,
+    0x26a9d3de35b7a1e7,
+    0xf49b2bf0e49f58d7,
+    0xffffffffffffffff,
+    0x01ffffffffffffff,
 ]);
 
 /// INV = -(r^{-1} mod 2^64) mod 2^64
-pub const INV: u64 = 0x1ba3a358ef788ef9;
+pub const INV: u64 = 0x2a81f20882b21e29;
 
 /// R = 2^256 mod r
 pub const R: Fr = Fr([
-    0x25f80bb3b99607d9,
-    0xf315d62f66b6e750,
-    0x932514eeeb8814f4,
-    0x09a6fc6f479155c6,
+    0xab1610e5242f0c80,
+    0xb26a078db053946c,
+    0x0000000000000005,
+    0x0000000000000000,
 ]);
 
 /// R^2 = 2^512 mod r
 pub const R2: Fr = Fr([
-    0x67719aa495e57731,
-    0x51b0cef09ce3fc26,
-    0x69dab7fac026e9a5,
-    0x04f6547b8d127688,
+    0x6921bd75f1e321aa,
+    0x016f997a4e557d3f,
+    0xfe677f26b8e821f2,
+    0x007be9f42e0719ec,
 ]);
 
 /// R^2 = 2^768 mod r
 pub const R3: Fr = Fr([
-    0xe0d6c6563d830544,
-    0x323e3883598d0f85,
-    0xf0fea3004c2e2ba8,
-    0x05874f84946737ec,
+    0xd26d015bfa48a645,
+    0x6d5e224bce0e0539,
+    0x9525cfe838da6011,
+    0x003991e9df0f24dc,
 ]);

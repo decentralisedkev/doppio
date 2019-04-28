@@ -59,7 +59,6 @@ impl ConditionallySelectable for Fr {
     }
 }
 
-
 impl<'a> Neg for &'a Fr {
     type Output = Fr;
 
@@ -278,10 +277,10 @@ impl Fr {
         // sqrt can be done with only one exponentiation,
         // via the computation of  self^((r + 1) // 4) (mod r)
         let sqrt = self.pow_vartime(&[
-            0xb425c397b5bdcb2e,
-            0x299a0824f3320420,
-            0x4199cec0404d0ec0,
-            0x039f6d3a994cebea,
+            0xc9aa74f78d6de87a,
+            0xfd26cafc3927d635,
+            0xffffffffffffffff,
+            0x007fffffffffffff,
         ]);
 
         CtOption::new(
@@ -613,7 +612,8 @@ fn test_from_bytes() {
         Fr::from_bytes([
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0
-        ]).unwrap(),
+        ])
+        .unwrap(),
         Fr::zero()
     );
 
@@ -621,7 +621,8 @@ fn test_from_bytes() {
         Fr::from_bytes([
             1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0
-        ]).unwrap(),
+        ])
+        .unwrap(),
         Fr::one()
     );
 
@@ -629,7 +630,8 @@ fn test_from_bytes() {
         Fr::from_bytes([
             217, 7, 150, 185, 179, 11, 248, 37, 80, 231, 182, 102, 47, 214, 21, 243, 244, 20, 136,
             235, 238, 20, 37, 147, 198, 85, 145, 71, 111, 252, 166, 9
-        ]).unwrap(),
+        ])
+        .unwrap(),
         R2
     );
 
@@ -638,8 +640,10 @@ fn test_from_bytes() {
         Fr::from_bytes([
             182, 44, 247, 214, 94, 14, 151, 208, 130, 16, 200, 204, 147, 32, 104, 166, 0, 59, 52,
             1, 1, 59, 103, 6, 169, 175, 51, 101, 234, 180, 125, 14
-        ]).is_some()
-            .unwrap_u8() == 1
+        ])
+        .is_some()
+        .unwrap_u8()
+            == 1
     );
 
     // modulus is invalid
@@ -647,8 +651,10 @@ fn test_from_bytes() {
         Fr::from_bytes([
             183, 44, 247, 214, 94, 14, 151, 208, 130, 16, 200, 204, 147, 32, 104, 166, 0, 59, 52,
             1, 1, 59, 103, 6, 169, 175, 51, 101, 234, 180, 125, 14
-        ]).is_none()
-            .unwrap_u8() == 1
+        ])
+        .is_none()
+        .unwrap_u8()
+            == 1
     );
 
     // Anything larger than the modulus is invalid
@@ -656,24 +662,30 @@ fn test_from_bytes() {
         Fr::from_bytes([
             184, 44, 247, 214, 94, 14, 151, 208, 130, 16, 200, 204, 147, 32, 104, 166, 0, 59, 52,
             1, 1, 59, 103, 6, 169, 175, 51, 101, 234, 180, 125, 14
-        ]).is_none()
-            .unwrap_u8() == 1
+        ])
+        .is_none()
+        .unwrap_u8()
+            == 1
     );
 
     assert!(
         Fr::from_bytes([
             183, 44, 247, 214, 94, 14, 151, 208, 130, 16, 200, 204, 147, 32, 104, 166, 0, 59, 52,
             1, 1, 59, 104, 6, 169, 175, 51, 101, 234, 180, 125, 14
-        ]).is_none()
-            .unwrap_u8() == 1
+        ])
+        .is_none()
+        .unwrap_u8()
+            == 1
     );
 
     assert!(
         Fr::from_bytes([
             183, 44, 247, 214, 94, 14, 151, 208, 130, 16, 200, 204, 147, 32, 104, 166, 0, 59, 52,
             1, 1, 59, 103, 6, 169, 175, 51, 101, 234, 180, 125, 15
-        ]).is_none()
-            .unwrap_u8() == 1
+        ])
+        .is_none()
+        .unwrap_u8()
+            == 1
     );
 }
 
