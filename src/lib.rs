@@ -186,17 +186,12 @@ fn test_assoc() {
 fn test_batch_normalize() {
     let mut p = ExtendedPoint::from(AffinePoint {
         u: Fq([
-            0xc0115cb656ae4839,
-            0x623dc3ff81d64c26,
-            0x5868e739b5794f2c,
-            0x23bd4fbb18d39c9c,
+            0xcf79566f8c7b540e,
+            0x1335d8bfac696f54,
+            0x47e200f70b9f4d65,
+            0x024c79f53d1d12a7,
         ]),
-        v: Fq([
-            0x7588ee6d6dd40deb,
-            0x9d6d7a23ebdb7c4c,
-            0x46462e26d4edb8c7,
-            0x10b4c1517ca82e9b,
-        ]),
+        v: Fq([0, 0, 0, 0]),
     })
     .mul_by_cofactor();
 
@@ -228,12 +223,12 @@ fn test_batch_normalize() {
 #[cfg(test)]
 const FULL_GENERATOR: AffinePoint = AffinePoint::from_raw_unchecked(
     Fq::from_raw([
-        0xe4b3d35df1a7adfe,
-        0xcaf55d1b29bf81af,
-        0x8b0f03ddd60a8187,
-        0x62edcbb8bf3787c8,
+        0x1f9669e1a4eccab3,
+        0x081aca58c6212db8,
+        0x2388ac6d0efcf0c7,
+        0x04c7b1198069b852,
     ]),
-    Fq::from_raw([0xb, 0x0, 0x0, 0x0]),
+    Fq::from_raw([0x0, 0x0, 0x0, 0x0]),
 );
 
 #[cfg(test)]
@@ -399,39 +394,22 @@ fn test_is_identity() {
 }
 
 #[test]
+// XXX:Find better test cases
 fn test_mul_consistency() {
-    let a = Fr([
-        0x21e61211d9934f2e,
-        0xa52c058a693c3e07,
-        0x9ccb77bfb12d6360,
-        0x07df2470ec94398e,
-    ]);
-    let b = Fr([
-        0x03336d1cbe19dbe0,
-        0x0153618f6156a536,
-        0x2604c9e1fc3c6b15,
-        0x04ae581ceb028720,
-    ]);
-    let c = Fr([
-        0xd7abf5bb24683f4c,
-        0x9d7712cc274b7c03,
-        0x973293db9683789f,
-        0x0b677e29380a97a7,
-    ]);
+    let a = Fr::from(10);
+    let b = Fr::from(20);
+    let c = Fr::from(200);
+
     assert_eq!(a * b, c);
+
     let p = ExtendedPoint::from(AffinePoint {
         u: Fq([
-            0xc0115cb656ae4839,
-            0x623dc3ff81d64c26,
-            0x5868e739b5794f2c,
-            0x23bd4fbb18d39c9c,
+            0xcf79566f8c7b540e,
+            0x1335d8bfac696f54,
+            0x47e200f70b9f4d65,
+            0x024c79f53d1d12a7,
         ]),
-        v: Fq([
-            0x7588ee6d6dd40deb,
-            0x9d6d7a23ebdb7c4c,
-            0x46462e26d4edb8c7,
-            0x10b4c1517ca82e9b,
-        ]),
+        v: Fq([0, 0, 0, 0]),
     })
     .mul_by_cofactor();
     assert_eq!(p * c, (p * a) * b);
