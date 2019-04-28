@@ -2,7 +2,7 @@
 
 extern crate test;
 
-use jubjub::*;
+use doppio::*;
 use test::Bencher;
 
 #[bench]

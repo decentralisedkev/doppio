@@ -1,11 +1,9 @@
 [package]
-authors = ["Sean Bowe <ewillbefull@gmail.com>", "Eirik Ogilvie-Wigley <eowigley@gmail.com>"]
-description = "Implementation of the Jubjub elliptic curve group"
-documentation = "https://docs.rs/jubjub/"
-homepage = "https://github.com/zkcrypto/jubjub"
+authors = [""]
+description = "Implementation of the doppio elliptic curve group"
 license = "MIT/Apache-2.0"
-name = "jubjub"
-repository = "https://github.com/zkcrypto/jubjub"
+name = "doppio"
+repository = "https://github.com/decentralisedkev/doppio"
 version = "0.1.0"
 edition = "2018"
 
